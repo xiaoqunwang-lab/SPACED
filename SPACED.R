@@ -1,11 +1,12 @@
 #This method requires the following parameters as input:
-#                 1.degs -> differential expressed genes
-#                 2.ident_use -> cell identity class
-#                 3.celltype ->  cell identity
+#                 1.obj -> seurat object
+#                 2.degs -> differential expressed genes
+#                 3.ident_use -> cell identity class
+#                 4.celltype ->  cell identity
 
 
 #function prop_calc calculates probability of gene expression in a given cell type
-prop_calc <- function(degs,ident_use,celltype){
+prop_calc <- function(obj,degs,ident_use,celltype){
   library(Seurat)
   prop <- matrix(0, nrow(degs), 1)
   dim(prop)
@@ -37,7 +38,7 @@ prop_calc <- function(degs,ident_use,celltype){
   return(prop)
 }
 
-#test <- prop_calc(ex_neuron_marker[1:20,],'merge_id_ed1',unique(ex_neuron$merge_id_ed1))
+#test <- prop_calc(ex_neuron,ex_neuron_marker[1:20,],'merge_id_ed1',unique(ex_neuron$merge_id_ed1))
 
 makeprobsvec<-function(p){ 
   phat<-p/sum(p) 

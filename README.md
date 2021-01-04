@@ -1,5 +1,5 @@
 # SPACED
-SPACED (Spatial Classification of mRNA Expression Data) is a computational method to infer
+SPACED (Spatial Classification of mRNA Expression Data) analysis is a computational method to infer
 spatial organization of celltypes identified in scRNA-seq data.
 This method requires the following parameters as input:
 

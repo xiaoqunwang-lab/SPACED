@@ -101,7 +101,7 @@ top_n_spec_deg <- function(deg_specificities,n){
   return(topn)
 }
 
-#function SPACED calculates regional specificity for a given subtype
+#function SPACED calculates log-transformed regional specificity for a given subtype
 SPACED <- function(insitu_intensity,celltype){
   library(matrixStats)
   insitu_intensity_norm <- matrix(0, nrow(insitu_intensity), ncol(insitu_intensity))
@@ -109,11 +109,8 @@ SPACED <- function(insitu_intensity,celltype){
     min_tmp =min(insitu_intensity[,j])
     max_tmp = max(insitu_intensity[,j])
     for(i in 1:nrow(insitu_intensity)){
-      insitu_intensity_norm[i,j]<- ((insitu_intensity[i,j]-min_tmp)/(max_tmp-min_tmp))+1
+      insitu_intensity_norm[i,j]<- ((insitu_intensity[i,j]-min_tmp)/(max_tmp-min_tmp))
     }
-  }
-  for(i in 1:ncol(insitu_intensity_norm)){
-    insitu_intensity_norm[,i]<- insitu_intensity_norm[,i]*colSds(as.matrix(insitu_intensity))[i]
   }
   #print(insitu_intensity_norm)
   
@@ -122,50 +119,16 @@ SPACED <- function(insitu_intensity,celltype){
   insitu_intensity_norm <- data.frame(SuG=mean(insitu_intensity_norm[1,]),OP=mean(insitu_intensity_norm[2,]),
                                       InG=mean(insitu_intensity_norm[3,]),DPG=mean(insitu_intensity_norm[4,]))
   rownames(insitu_intensity_norm)<-celltype
-  insitu_intensity_norm_binary <- matrix(0,nrow(insitu_intensity_norm),ncol(insitu_intensity_norm))
-  print(insitu_intensity_norm_binary)
-  
-  for(i in 1:nrow(insitu_intensity_norm)){
-    insitu_intensity_norm_binary[i,as.numeric(which.max(insitu_intensity_norm[i,]))]<-insitu_intensity_norm[i,which.max(insitu_intensity_norm[i,])]
-  }
-  rownames(insitu_intensity_norm_binary)<- rownames(insitu_intensity_norm)
-  colnames(insitu_intensity_norm_binary)<- colnames(insitu_intensity_norm)
-  return(insitu_intensity_norm)
-}
-
-#function SPACED_binary calculates binarized regional specificity for a given subtype
-#required input: 1.in situ signal intensity accessed from Allen Institute
-#                (https://mouse.brain-map.org/search/index)
-#                2.cell type, for which regional specificity should be calculated
-SPACED_binary <- function(insitu_intensity,celltype){
-  library(matrixStats)
-  insitu_intensity_norm <- matrix(0, nrow(insitu_intensity), ncol(insitu_intensity))
-  for(j in 1:ncol(insitu_intensity)){
-    min_tmp =min(insitu_intensity[,j])
-    max_tmp = max(insitu_intensity[,j])
-    for(i in 1:nrow(insitu_intensity)){
-      insitu_intensity_norm[i,j]<- ((insitu_intensity[i,j]-min_tmp)/(max_tmp-min_tmp))+1
-    }
-  }
-  for(i in 1:ncol(insitu_intensity_norm)){
-    insitu_intensity_norm[,i]<- insitu_intensity_norm[,i]*colSds(as.matrix(insitu_intensity))[i]
-  }
-  #print(insitu_intensity_norm)
-  
-  colnames(insitu_intensity_norm)<- colnames(insitu_intensity)
-  rownames(insitu_intensity_norm) <- rownames(insitu_intensity)
-  insitu_intensity_norm <- data.frame(SuG=mean(insitu_intensity_norm[1,]),OP=mean(insitu_intensity_norm[2,]),
-                                          InG=mean(insitu_intensity_norm[3,]),DPG=mean(insitu_intensity_norm[4,]))
-  rownames(insitu_intensity_norm)<-celltype
-  insitu_intensity_norm_binary <- matrix(0,nrow(insitu_intensity_norm),ncol(insitu_intensity_norm))
+  #insitu_intensity_norm_binary <- matrix(0,nrow(insitu_intensity_norm),ncol(insitu_intensity_norm))
   #print(insitu_intensity_norm_binary)
   
-  for(i in 1:nrow(insitu_intensity_norm)){
+  #for(i in 1:nrow(insitu_intensity_norm)){
     insitu_intensity_norm_binary[i,as.numeric(which.max(insitu_intensity_norm[i,]))]<-insitu_intensity_norm[i,which.max(insitu_intensity_norm[i,])]
-  }
-  rownames(insitu_intensity_norm_binary)<- rownames(insitu_intensity_norm)
-  colnames(insitu_intensity_norm_binary)<- colnames(insitu_intensity_norm)
-  return(insitu_intensity_norm_binary)
+  #}
+  #rownames(insitu_intensity_norm_binary)<- rownames(insitu_intensity_norm)
+  #colnames(insitu_intensity_norm_binary)<- colnames(insitu_intensity_norm)
+  insitu_intensity_norm_log <- log2(insitu_intensity_norm+1)
+  return(insitu_intensity_norm_log)
 }
 
 

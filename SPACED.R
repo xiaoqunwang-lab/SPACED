@@ -123,7 +123,7 @@ SPACED <- function(insitu_intensity,celltype){
   #print(insitu_intensity_norm_binary)
   
   #for(i in 1:nrow(insitu_intensity_norm)){
-    insitu_intensity_norm_binary[i,as.numeric(which.max(insitu_intensity_norm[i,]))]<-insitu_intensity_norm[i,which.max(insitu_intensity_norm[i,])]
+  #  insitu_intensity_norm_binary[i,as.numeric(which.max(insitu_intensity_norm[i,]))]<-insitu_intensity_norm[i,which.max(insitu_intensity_norm[i,])]
   #}
   #rownames(insitu_intensity_norm_binary)<- rownames(insitu_intensity_norm)
   #colnames(insitu_intensity_norm_binary)<- colnames(insitu_intensity_norm)

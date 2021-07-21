@@ -9,4 +9,5 @@ This method requires the following parameters as input:
                  4.celltype ->  cell identity
 
 SPACED exhibited greater performance with the top10 most cluster specific genes 
+
 SPACED is restricted to the brain regions which have clear anatomic structures and distinguishable borders
